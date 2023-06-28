@@ -12,14 +12,11 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 
-from xgboost import plot_tree
-from sklearn.tree import DecisionTreeRegressor
-from sklearn import tree
-
 horizon = 6 # how many time units ahead
 samplesForPrediction = 2 # number of samples used for prediction
 ride = "Green Fire"
 aggregation_level = "_daily" # "_hourly", "_weekly", "_daily", ""
+modelName = "XGBRegressor"
 
 filename = "WaitTimes" + aggregation_level 
 data = pd.read_csv("C:\\Users\\jzilk\\Documents\\HFU\\DSML/dsml_project2/data/"+filename+".csv")
@@ -115,9 +112,9 @@ Ypred_train = model.predict(Xtrain)
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 avErr = mean_absolute_error(Ytest,Ypred)
-print(avErr, "xgb model average error on test data")
+print(avErr, modelName+" model average error on test data")
 avErr = mean_absolute_error(Ytrain,Ypred_train)
-print(avErr, "xgb model average error on train data")
+print(avErr, modelName+" model average error on train data")
 avErr = mean_absolute_error(waitTimesLagged[ride],waitTimesLagged[ride+"_lag1"])
 print(avErr, "baseline average error on all data")
 avErr = mean_absolute_error(Ytest,Ytest_lag1)
@@ -132,7 +129,7 @@ plt.figure()
 plt.plot(xplt, Ypred, label="pred")
 plt.plot(xplt, Ytest, label="true")
 plt.legend()
-plt.title("XGBoost prediction on test set")
+plt.title(modelName+" prediction on test set")
 plt.show()
 
 xplt =  np.arange(0, Ypred_train.shape[0], step=1)
@@ -140,7 +137,7 @@ plt.figure()
 plt.plot(xplt, Ypred_train, label="pred")
 plt.plot(xplt, Ytrain, label="true")
 plt.legend()
-plt.title("XGBoost prediction on train set")
+plt.title(modelName+" prediction on train set")
 plt.show()
 
 pred_err = Ytest - Ypred
@@ -149,7 +146,7 @@ fig=plt.figure()
 plt.plot(range(len(pred_err)),pred_err,label = "model error")
 plt.plot(range(len(base_err)),base_err,label = "baseline error")
 plt.legend()
-plt.title("Error comparison")
+plt.title(f"Error comparison ({modelName})")
 fig.show()
 
 
