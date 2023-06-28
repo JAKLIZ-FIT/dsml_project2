@@ -14,8 +14,10 @@ from sklearn import linear_model
 
 horizon = 6 # how many time units ahead
 samplesForPrediction = 7 # number of samples used for prediction
-ride = "Green Fire"
-aggregation_level = "_daily" # "_hourly", "_weekly", "_daily", ""
+ride = "ISS"
+iAgglevel = 2
+aggregationLevels = ["", "_hourly", "_weekly", "_daily"]
+aggregation_level = aggregationLevels[iAgglevel]
 modelName = "LinearRegressor"
 
 filename = "WaitTimes" + aggregation_level 
@@ -53,7 +55,7 @@ column = "weather"
 data.loc[:,column] = le.fit_transform(data.loc[:,column])
 
 if aggregation_level == "":
-    data["time"] = pd.to_timedelta(data.time)
+    data["time"] = pd.to_datetime(data.time)
     data['hour'] = [x.hour for x in data.time]
     data['minute'] = [x.minute for x in data.time]
 else:    

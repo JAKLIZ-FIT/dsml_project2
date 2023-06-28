@@ -15,7 +15,9 @@ from sklearn.model_selection import train_test_split
 horizon = 6 # how many time units ahead
 samplesForPrediction = 2 # number of samples used for prediction
 ride = "ISS"
-aggregation_level = "_daily" # "_hourly", "_weekly", "_daily", ""
+iAgglevel = 2
+aggregationLevels = ["", "_hourly", "_weekly", "_daily"]
+aggregation_level = aggregationLevels[iAgglevel]
 modelName = "XGBRegressor"
 
 filename = "WaitTimes" + aggregation_level 
@@ -53,7 +55,7 @@ column = "weather"
 data.loc[:,column] = le.fit_transform(data.loc[:,column])
 
 if aggregation_level == "":
-    data["time"] = pd.to_timedelta(data.time)
+    data["time"] = pd.to_datetime(data.time)
     data['hour'] = [x.hour for x in data.time]
     data['minute'] = [x.minute for x in data.time]
 else:    
