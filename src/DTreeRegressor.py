@@ -154,7 +154,7 @@ fig=plt.figure()
 plt.plot(range(len(pred_err)),pred_err,label = "model error")
 plt.plot(range(len(base_err)),base_err,label = "baseline error")
 plt.legend()
-plt.title("Error comparison")
+plt.title(f"Error comparison ({modelName})")
 fig.show()
 
 

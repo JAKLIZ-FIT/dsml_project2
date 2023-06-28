@@ -7,16 +7,16 @@ Created on Fri Jun 16 15:30:59 2023
 
 import numpy as np
 import pandas as pd
-
+import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
-from sklearn.neural_network import MLPRegressor
+from sklearn import linear_model
 
 horizon = 6 # how many time units ahead
 samplesForPrediction = 7 # number of samples used for prediction
 ride = "Green Fire"
 aggregation_level = "_daily" # "_hourly", "_weekly", "_daily", ""
-modelName = "mlpRegressor"
+modelName = "DTreeRegressor"
 
 filename = "WaitTimes" + aggregation_level 
 data = pd.read_csv("C:\\Users\\jzilk\\Documents\\HFU\\DSML/dsml_project2/data/"+filename+".csv")
@@ -105,12 +105,11 @@ Ytest = Ytest[ride]
 
 print(waitTimesLagged.dtypes)
 
-model = MLPRegressor(hidden_layer_sizes=(64, 64,64), 
-                     activation="relu" ,
-                     random_state=42, max_iter=2000)
+model = linear_model.LinearRegression()
 model.fit(Xtrain, Ytrain)
 Ypred = model.predict(Xtest)
 Ypred_train = model.predict(Xtrain)
+
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 print("aggregation level:",aggregation_level,"| horizon:",horizon,"| samples used:",samplesForPrediction)
@@ -125,7 +124,7 @@ print(avErr, "baseline average error on test data")
 avErr = mean_absolute_error(Ytrain,Ytrain_lag1)
 print(avErr, "baseline average error on test data")
 
-import matplotlib.pyplot as plt
+
 xplt =  np.arange(0, Ypred.shape[0], step=1)
 plt.figure()
 plt.plot(xplt, Ypred, label="pred")
@@ -156,7 +155,6 @@ plt.figure()
 plt.scatter(Ytest, Ypred)
 plt.ylabel("Prediction")
 plt.xlabel("Actual")
-plt.title(modelName)
 plt.show()
 
 """
