@@ -14,7 +14,7 @@ from sklearn.model_selection import train_test_split
 
 horizon = 6 # how many time units ahead
 samplesForPrediction = 2 # number of samples used for prediction
-ride = "Green Fire"
+ride = "ISS"
 aggregation_level = "_daily" # "_hourly", "_weekly", "_daily", ""
 modelName = "XGBRegressor"
 
@@ -111,6 +111,7 @@ Ypred = model.predict(Xtest)
 Ypred_train = model.predict(Xtrain)
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+print("aggregation level:",aggregation_level,"| horizon:",horizon,"| samples used:",samplesForPrediction)
 avErr = mean_absolute_error(Ytest,Ypred)
 print(avErr, modelName+" model average error on test data")
 avErr = mean_absolute_error(Ytrain,Ypred_train)
@@ -149,6 +150,12 @@ plt.legend()
 plt.title(f"Error comparison ({modelName})")
 fig.show()
 
+plt.figure()
+plt.scatter(Ytest, Ypred)
+plt.ylabel("Prediction")
+plt.xlabel("Actual")
+plt.title(modelName)
+plt.show()
 
 """
 xgb = model
@@ -189,7 +196,7 @@ plt.barh(imp_frame[0],imp_frame[1])
 plt.show()
 """
 
-"""
+
 from sklearn.inspection import permutation_importance
 importance = permutation_importance(model, Xtest,
 Ytest,n_repeats=10,random_state=42,scoring='neg_mean_absolute_error')
@@ -204,10 +211,10 @@ import numpy as np
 pos = np.arange(len(importance.importances_mean))
 plt.figure()
 plt.bar(pos,importance.importances_mean,tick_label=Xtest.columns)
-plt.xticks(fontsize=15, rotation=45)
-plt.yticks(fontsize=15)
+plt.xticks(rotation=45,ha='right')
+plt.yticks()
 plt.show()
-"""
+
 
 """
 import shap

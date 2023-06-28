@@ -172,14 +172,14 @@ plt.legend()
 plt.title(modelName+" prediction on train set")
 plt.show()
 
-pred_err = Ytest - Ypred
-base_err = Ytest - Ytrain_lag1
-fig=plt.figure()
-plt.plot(range(len(pred_err)),pred_err,label = "model error")
-plt.plot(range(len(base_err)),base_err,label = "baseline error")
-plt.legend()
-plt.title(f"Error comparison ({modelName})")
-fig.show()
+#pred_err = Ytest - Ypred
+#base_err = Ytest - Ytrain_lag1
+#fig=plt.figure()
+#plt.plot(range(len(pred_err)),pred_err,label = "model error")
+#plt.plot(range(len(base_err)),base_err,label = "baseline error")
+#plt.legend()
+#plt.title(f"Error comparison ({modelName})")
+#fig.show()
 
 
 plt.figure()
@@ -227,7 +227,7 @@ plt.barh(imp_frame[0],imp_frame[1])
 plt.show()
 """
 
-
+"""
 from sklearn.inspection import permutation_importance
 importance = permutation_importance(model, Xtest,
 Ytest,n_repeats=10,random_state=42,scoring='neg_mean_absolute_error')
@@ -245,7 +245,7 @@ plt.bar(pos,importance.importances_mean,tick_label=Xtest.columns)
 plt.xticks(rotation=45,ha='right')
 plt.yticks()
 plt.show()
-
+"""
 
 """
 import shap
