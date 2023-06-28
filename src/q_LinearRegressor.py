@@ -16,7 +16,7 @@ horizon = 6 # how many time units ahead
 samplesForPrediction = 7 # number of samples used for prediction
 ride = "Green Fire"
 aggregation_level = "_daily" # "_hourly", "_weekly", "_daily", ""
-modelName = "DTreeRegressor"
+modelName = "LinearRegressor"
 
 filename = "WaitTimes" + aggregation_level 
 data = pd.read_csv("C:\\Users\\jzilk\\Documents\\HFU\\DSML/dsml_project2/data/"+filename+".csv")
