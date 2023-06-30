@@ -213,8 +213,9 @@ import numpy as np
 pos = np.arange(len(importance.importances_mean))
 plt.figure()
 plt.bar(pos,importance.importances_mean,tick_label=Xtest.columns)
-plt.xticks(rotation=45,ha='right')
-plt.yticks()
+plt.xticks(fontsize=15,rotation=45,ha='right')
+plt.yticks(fontsize=15)
+plt.tight_layout()
 plt.show()
 
 

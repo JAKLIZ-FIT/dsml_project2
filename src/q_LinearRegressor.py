@@ -134,7 +134,7 @@ plt.plot(xplt, Ytest, label="true")
 plt.legend()
 plt.title(modelName+" prediction on test set")
 plt.show()
-
+"""
 xplt =  np.arange(0, Ypred_train.shape[0], step=1)
 plt.figure()
 plt.plot(xplt, Ypred_train, label="pred")
@@ -151,7 +151,7 @@ plt.plot(range(len(base_err)),base_err,label = "baseline error")
 plt.legend()
 plt.title(f"Error comparison ({modelName})")
 fig.show()
-
+"""
 
 plt.figure()
 plt.scatter(Ytest, Ypred)
@@ -213,8 +213,9 @@ import numpy as np
 pos = np.arange(len(importance.importances_mean))
 plt.figure()
 plt.bar(pos,importance.importances_mean,tick_label=Xtest.columns)
-plt.xticks(rotation=45,ha='right')
-plt.yticks()
+plt.xticks(fontsize=15,rotation=45,ha='right')
+plt.yticks(fontsize=15)
+plt.tight_layout()
 plt.show()
 
 

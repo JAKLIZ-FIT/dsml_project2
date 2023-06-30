@@ -22,6 +22,7 @@ iAgglevel = 2
 aggregationLevels = ["", "_hourly", "_weekly", "_daily"]
 aggregation_level = aggregationLevels[iAgglevel]
 modelName = "DTreeRegressor"
+myMaxDepth = 10
 
 filename = "WaitTimes" + aggregation_level 
 data = pd.read_csv("C:\\Users\\jzilk\\Documents\\HFU\\DSML/dsml_project2/data/"+filename+".csv")
@@ -86,13 +87,22 @@ dataIn = data[cols]
 
 """ START Plot the scatter plot matrix """
 print("is_holiday unique:",data.is_holiday.unique())
-#import seaborn as sns
+import seaborn as sns
 # plot scatter matrix using seaborn
 #sns.set_theme(style="ticks")
 #sns.pairplot(dataIn ) #, hue=ride
 """ END Plot the scatter plot matrix """
 
 waitTimes = dataIn[[ride]]
+
+print(waitTimes.describe())
+
+#plt.figure()
+#plt.plot(waitTimes)
+#plt.title(modelName+" wait times")
+#plt.show()
+sns.boxplot(waitTimes)
+
 waitTimesLagged = get_lag(waitTimes, horizon+samplesForPrediction-1)
 
 X = dataIn.drop(ride,axis=1)
@@ -110,7 +120,7 @@ Ytest = Ytest[ride]
 
 print(waitTimesLagged.dtypes)
 
-model = DecisionTreeRegressor(max_depth=3)
+model = DecisionTreeRegressor(max_depth=myMaxDepth)
 model.fit(Xtrain, Ytrain)
 Ypred = model.predict(Xtest)
 Ypred_train = model.predict(Xtrain)
@@ -142,6 +152,7 @@ plt.legend()
 plt.title(modelName+" prediction on test set")
 plt.show()
 
+"""
 xplt =  np.arange(0, Ypred_train.shape[0], step=1)
 plt.figure()
 plt.plot(xplt, Ypred_train, label="pred")
@@ -158,7 +169,7 @@ plt.plot(range(len(base_err)),base_err,label = "baseline error")
 plt.legend()
 plt.title(f"Error comparison ({modelName})")
 fig.show()
-
+"""
 
 plt.figure()
 plt.scatter(Ytest, Ypred)
@@ -220,8 +231,9 @@ import numpy as np
 pos = np.arange(len(importance.importances_mean))
 plt.figure()
 plt.bar(pos,importance.importances_mean,tick_label=Xtest.columns)
-plt.xticks(rotation=45,ha='right')
-plt.yticks()
+plt.xticks(fontsize=15,rotation=45,ha='right')
+plt.yticks(fontsize=15)
+plt.tight_layout()
 plt.show()
 
 
